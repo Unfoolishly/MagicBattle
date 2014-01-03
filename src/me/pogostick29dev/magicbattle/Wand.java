@@ -26,7 +26,7 @@ public enum Wand {
 		}
 	}),
 	
-	WITHERSKULL("wITHER", ChatColor.WHITE, new WandRunnable() {
+	WITHERSKULL("Wither", ChatColor.WHITE, new WandRunnable() {
 		public void run(PlayerInteractEvent e){
 			WitherSkull ws = e.getPlayer().launchProjectile(WitherSkull.class);
 			for (Entity en : e.getPlayer().getNearbyEntities(10,10,10)) {
