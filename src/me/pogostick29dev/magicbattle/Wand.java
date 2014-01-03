@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.WitherSkull;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,8 +22,36 @@ public enum Wand {
 		public void run(PlayerInteractEvent e) {
 			Fireball fb = e.getPlayer().launchProjectile(Fireball.class);
 			fb.setIsIncendiary(false);
-			//fb.setYield(0F);
+			fb.setYield(0F);
 		}
+	}),
+	
+	WITHERSKULL("wITHER", ChatColor.WHITE, new WandRunnable() {
+		public void run(PlayerInteractEvent e){
+			WitherSkull ws = e.getPlayer().launchProjectile(WitherSkull.class);
+			for (Entity en : e.getPlayer().getNearbyEntities(10,10,10)) {
+				 if (en instanceof Player) {
+		((Player) en).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 10 * 5, 1)); {
+			MessageManager.getInstance().msg((Player)en, MessageType.INFO, ChatColor.WHITE + e.getPlayer().getName() + "has sent you a WitherSkull");
+			MessageManager.getInstance().msg(e.getPlayer(), MessageType.INFO, ChatColor.WHITE + "You have sent a WitherSkull to" + ((Player) en).getName() + "!"); 		 
+			ws.setIsIncendiary(false);
+			ws.setYield(0f);
+			}
+		 }
+	  }
+	}
+}),
+	
+	HARM("Harm", ChatColor.DARK_GRAY, new WandRunnable() {
+	public void run(PlayerInteractEvent e) {
+	for (Entity en : e.getPlayer().getNearbyEntities(10,10,10)) {
+	 if (en instanceof Player) {
+((Player) en).addPotionEffect(new PotionEffect(PotionEffectType.HARM, 2 * 1, 1));
+MessageManager.getInstance().msg((Player)en, MessageType.INFO, ChatColor.DARK_GRAY + e.getPlayer().getName() + "has harmed you!");
+MessageManager.getInstance().msg((Player)en, MessageType.INFO, ChatColor.DARK_GRAY + "You have harm" + ((Player) en).getName() + "!");
+	 }
+	}
+	}
 	}),
 	
 	POISON("Poison", ChatColor.DARK_PURPLE, new WandRunnable() {
